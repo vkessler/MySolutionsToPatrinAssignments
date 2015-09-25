@@ -105,21 +105,6 @@ public class KaffeeautomatenApp {
     
     public static void main(String[] args) throws ParseException {
     
-//    	NumberFormat nf = NumberFormat.getInstance();
-//    	nf.setMaximumFractionDigits(2);
-//    	nf.setMinimumFractionDigits(2);
-//    	System.out.println(nf.format(2 - 1.13));
-//    	double d1 = 0;
-//		try {
-//			d1 = (double) nf.parse(nf.format(2-1.13));
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//    	double d2 =  0.87;
-//    	System.out.println(d1 == d2);
-    	//System.out.println(Double.doubleToLongBits(1.13));
-        
         KA[] kaffeeSorten = KA.values();
         System.out.println("Hallo! \nFolgende Kaffeesorten stehen zur Auswahl:");
         for (KA n : kaffeeSorten) {
@@ -146,15 +131,7 @@ public class KaffeeautomatenApp {
         System.out.println("Sie haben " + kaffee.name() + " gewählt. \nBitte geben Sie " + 
                 (df.format((double)kaffee.getPrice()/100)) + " Euro ein. Danke!" );
         
-        //sc1.close();
-        
-        
         Scanner sc2 = new Scanner(System.in);
-//        sc2.useLocale(Locale.GERMANY);
-
-    	//NumberFormat nf = NumberFormat.getInstance();
-    	//nf.setMaximumFractionDigits(2);
-    	//nf.setMinimumFractionDigits(2);
         int guthaben = 0;
         int preis = kaffee.getPrice();
         
@@ -166,10 +143,8 @@ public class KaffeeautomatenApp {
             if (preis > guthaben) 
             System.out.println("Bitte noch " + df.format((double)(preis - guthaben) / 100) + " Euro eingeben." );
         }  
-        
-        //double restgeld = Math.abs((double) nf.parse(nf.format(preis - guthaben)));
+
         int restgeld = Math.abs(preis - guthaben);
-        //double epsilon = 0.00001;
         Scanner sc3 = new Scanner(System.in);
         System.out.println("Danke! Bitte entnehmen Sie ihr Getränk (\"true\" oder \"false\" eingeben).");
         boolean take = sc3.nextBoolean();
@@ -181,51 +156,21 @@ public class KaffeeautomatenApp {
             take = sc3.nextBoolean();
         } ;
         System.out.println(restgeld);
+        Muenzen[] muenzArr = Muenzen.values();
         if (restgeld > 0 ) {
             System.out.println("Vielen Dank! Sie bekommen noch " + df.format((double) restgeld / 100) + 
                 " Euro. Bitte entnehmen Sie Ihr Restgeld.");
-            for (Muenzen n : Muenzen.values() ) {
-            	n.count1 = restgeld / n.getMuenzWert();
-            	restgeld %= n.getMuenzWert();
+            for (int n = muenzArr.length - 1 ; n >= 0 ; n--) {
+            	muenzArr[n].count1 = restgeld / muenzArr[n].getMuenzWert();
+            	restgeld %= muenzArr[n].getMuenzWert();
             }
             for (Muenzen n : Muenzen.values()){
-            	System.out.println(n + "\t" + n.count1);
+            	System.out.println(n.count1 + " mal\t" + df.format((double) n.getMuenzWert() / 100) + " Euro"  );
             }
         }   
-               
         else {
             System.out.println("Vielen Dank! Haben Sie noch einen schönen Tag.");
         }
 
-    
-        
-        System.out.print("Bitte geben Sie Ihr Geld in Cent an: ");
-        int input1 = new Scanner(System.in).nextInt();
-       
-        for (Coins c : Coins.values()) {
-            c.count = input1 / c.value;
-            input1 %= c.value;
-        }
-       
-        for (Coins c : Coins.values())
-            System.out.println(c + "\t" + c.count);
-        
-
-
-
     }//end of main
-    
-}
-
-
-
-enum Coins {
-    DOLLAR(100), QUARTER(25), DIME(10), NICKEL(5), CENT(1);
-
-    int value;
-    int count;
-
-    private Coins(int value) {
-        this.value = value;
-    }
 }
