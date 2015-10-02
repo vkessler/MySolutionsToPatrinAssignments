@@ -34,7 +34,7 @@ class Gebaeude {
     }
     
     public String getRaum(int stockwerkNr, int raumNr) {
-        return 
+        return "Raum " + raumNr + " in Stockwerk " + stockwerkNr;
     }
     
    /*****************Innere Klassen*******************/
